@@ -1,0 +1,106 @@
+﻿@model SysWebNHME.Models.Usuarios
+@{
+    ViewBag.Title = "MENU";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin CSS -->
+    <link href="~/Content/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    @*<link type="text/scss" href="~/Content/sb-admin.css" rel="stylesheet" />*@
+    <link type="text/css" href="~/Content/sb-admin.css" rel="stylesheet" />
+</head>
+<body class="loginBody">
+
+    <div style="margin-top:40px;" class="row text-center">
+        <div class="col-lg-12">
+            <p  class="font-weight-normal display-3 text-center text-white">SISTEMA ERP</p>
+            <p  class="font-italic text-center text-white">NUEVO HOSPITAL MONTE ESPAÑA</p>
+        </div>
+    </div>
+
+    <div id="BotonesSistemas" style="margin-top:5%;" class="row">
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(8))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysServicios_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysServicios</p>
+            </a>
+        </div>        
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(1))
+        {
+        <div class="perm-1 col-lg-2 text-center">
+            <a href="~/Main/Inicio">
+                <img class="MainImages" src="~/Content/Images/SysAlmacen_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysAlmacen</p>
+            </a>
+        </div>
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(9))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysPedidos_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysPedidos</p>
+            </a>
+        </div>
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(10))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysAuditoria_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysAuditoria</p>
+            </a>
+        </div>
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(11))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysCompras_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysCompras</p>
+            </a>
+        </div>
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(12))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysEjecutivo_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysEjecutivo</p>
+            </a>
+        </div>
+        }
+        @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(13))
+        {
+        <div class="col-lg-2 text-center">
+            <a href="#">
+                <img class="MainImages" src="~/Content/Images/SysVentas_128x128.png" alt="Smiley face" height="100" width="100" />
+                <p>SysVentas</p>
+            </a>
+        </div>
+        }
+    </div>
+</body>
+
+</html>
+<footer class="">
+    <div class="container">
+        <div class="text-center">
+            <small>Derechos Reservados Copyright &copy; 2017</small>
+        </div>
+    </div>
+</footer>

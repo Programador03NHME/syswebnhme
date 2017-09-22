@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SysWebNHME.Models.Areas>
+
+<table id="tblAreas" class="table table-striped table-borde">
+    <thead>
+        <tr>
+            <th>
+                IDArea
+            </th>
+            <th class="text-left">
+               Nombre
+            </th>
+            <th class="text-left">
+                Nombre Corto
+            </th>
+            <th class="text-left">
+                IDDireccion
+            </th>
+            <th class="text-left">
+                Dirección
+            </th>
+            <th>
+               Estado
+            </th>     
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDArea)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescCorta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direcciones.IDDireccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direcciones.Descripcion)
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.EstadoInventario.Descripcion)
+                </td>      
+            </tr>
+        }
+    </tbody>
+</table>

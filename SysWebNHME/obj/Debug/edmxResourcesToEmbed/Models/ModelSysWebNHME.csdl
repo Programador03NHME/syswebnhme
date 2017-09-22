@@ -1,0 +1,666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBWNHMEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DBWNHMEEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SP_CargarPermisos" ReturnType="Collection(DBWNHMEModel.SP_CargarPermisos_Result)">
+      <Parameter Name="inRol" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AdminAreas">
+      <Parameter Name="IDArea" Mode="In" Type="Int32" />
+      <Parameter Name="IDDireccion" Mode="In" Type="Int32" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="DesCorta" Mode="In" Type="String" />
+      <Parameter Name="EsBodega" Mode="In" Type="Boolean" />
+      <Parameter Name="IDUsuarioCrea" Mode="In" Type="Int32" />
+      <Parameter Name="HostCrea" Mode="In" Type="String" />
+      <Parameter Name="IDUsuarioEdita" Mode="In" Type="Int32" />
+      <Parameter Name="HostEdita" Mode="In" Type="String" />
+      <Parameter Name="IDEstadoInventario" Mode="In" Type="Int32" />
+      <Parameter Name="Proceso" Mode="In" Type="Int32" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SP_AdminMovimientos">
+      <Parameter Name="IDTipoMov" Mode="In" Type="Int32" />
+      <Parameter Name="Descripcion" Mode="In" Type="String" />
+      <Parameter Name="DescCorta" Mode="In" Type="String" />
+      <Parameter Name="TipoMov" Mode="In" Type="String" />
+      <Parameter Name="Estado" Mode="In" Type="Boolean" />
+      <Parameter Name="IDUsuarioCrea" Mode="In" Type="Int32" />
+      <Parameter Name="HostCrea" Mode="In" Type="String" />
+      <Parameter Name="IDUsuarioEdita" Mode="In" Type="Int32" />
+      <Parameter Name="HostEdita" Mode="In" Type="String" />
+      <Parameter Name="Proceso" Mode="In" Type="Int32" />
+      <Parameter Name="Mensaje" Mode="InOut" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="AccionArticulos" EntityType="DBWNHMEModel.AccionArticulos" />
+    <EntitySet Name="Areas" EntityType="DBWNHMEModel.Areas" />
+    <EntitySet Name="Articulos" EntityType="DBWNHMEModel.Articulos" />
+    <EntitySet Name="Direcciones" EntityType="DBWNHMEModel.Direcciones" />
+    <EntitySet Name="EquiposMac" EntityType="DBWNHMEModel.EquiposMac" />
+    <EntitySet Name="EstadoInventario" EntityType="DBWNHMEModel.EstadoInventario" />
+    <EntitySet Name="Familias" EntityType="DBWNHMEModel.Familias" />
+    <EntitySet Name="GenericoArticulos" EntityType="DBWNHMEModel.GenericoArticulos" />
+    <EntitySet Name="Laboratorios" EntityType="DBWNHMEModel.Laboratorios" />
+    <EntitySet Name="Permisos" EntityType="DBWNHMEModel.Permisos" />
+    <EntitySet Name="Roles" EntityType="DBWNHMEModel.Roles" />
+    <EntitySet Name="TiposDeMov" EntityType="DBWNHMEModel.TiposDeMov" />
+    <EntitySet Name="UnidadDeMedidas" EntityType="DBWNHMEModel.UnidadDeMedidas" />
+    <EntitySet Name="Usuarios" EntityType="DBWNHMEModel.Usuarios" />
+    <AssociationSet Name="FK_AccionArticulos_Usuarios" Association="DBWNHMEModel.FK_AccionArticulos_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="AccionArticulos" EntitySet="AccionArticulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_AccionArticulos" Association="DBWNHMEModel.FK_Articulos_AccionArticulos">
+      <End Role="AccionArticulos" EntitySet="AccionArticulos" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Areas_Direcciones" Association="DBWNHMEModel.FK_Areas_Direcciones">
+      <End Role="Direcciones" EntitySet="Direcciones" />
+      <End Role="Areas" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Areas_EstadoInventario" Association="DBWNHMEModel.FK_Areas_EstadoInventario">
+      <End Role="EstadoInventario" EntitySet="EstadoInventario" />
+      <End Role="Areas" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Areas_Usuarios" Association="DBWNHMEModel.FK_Areas_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Areas" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquiposMac_Areas" Association="DBWNHMEModel.FK_EquiposMac_Areas">
+      <End Role="Areas" EntitySet="Areas" />
+      <End Role="EquiposMac" EntitySet="EquiposMac" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_EstadoInventario" Association="DBWNHMEModel.FK_Articulos_EstadoInventario">
+      <End Role="EstadoInventario" EntitySet="EstadoInventario" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_Familias" Association="DBWNHMEModel.FK_Articulos_Familias">
+      <End Role="Familias" EntitySet="Familias" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_GenericoArticulos" Association="DBWNHMEModel.FK_Articulos_GenericoArticulos">
+      <End Role="GenericoArticulos" EntitySet="GenericoArticulos" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_Laboratorios" Association="DBWNHMEModel.FK_Articulos_Laboratorios">
+      <End Role="Laboratorios" EntitySet="Laboratorios" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_UnidadDeMedidas" Association="DBWNHMEModel.FK_Articulos_UnidadDeMedidas">
+      <End Role="UnidadDeMedidas" EntitySet="UnidadDeMedidas" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articulos_Usuarios" Association="DBWNHMEModel.FK_Articulos_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Articulos" EntitySet="Articulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Direcciones_Usuarios" Association="DBWNHMEModel.FK_Direcciones_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Direcciones" EntitySet="Direcciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadoInventario_Usuarios" Association="DBWNHMEModel.FK_EstadoInventario_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="EstadoInventario" EntitySet="EstadoInventario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Familias_EstadoInventario" Association="DBWNHMEModel.FK_Familias_EstadoInventario">
+      <End Role="EstadoInventario" EntitySet="EstadoInventario" />
+      <End Role="Familias" EntitySet="Familias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Familias_Usuarios" Association="DBWNHMEModel.FK_Familias_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Familias" EntitySet="Familias" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GenericoArticulos_Usuarios" Association="DBWNHMEModel.FK_GenericoArticulos_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="GenericoArticulos" EntitySet="GenericoArticulos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Laboratorios_Usuarios" Association="DBWNHMEModel.FK_Laboratorios_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Laboratorios" EntitySet="Laboratorios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles" Association="DBWNHMEModel.FK_Usuarios_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TiposDeMov_Usuarios" Association="DBWNHMEModel.FK_TiposDeMov_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="TiposDeMov" EntitySet="TiposDeMov" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UnidadDeMedidas_Usuarios" Association="DBWNHMEModel.FK_UnidadDeMedidas_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="UnidadDeMedidas" EntitySet="UnidadDeMedidas" />
+    </AssociationSet>
+    <AssociationSet Name="RolPermisos" Association="DBWNHMEModel.RolPermisos">
+      <End Role="Permisos" EntitySet="Permisos" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="SP_CargarPermisos_Result">
+    <Property Type="Int32" Name="IdPermiso" Nullable="false" />
+    <Property Type="String" Name="Descripcion" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <EntityType Name="AccionArticulos">
+    <Key>
+      <PropertyRef Name="IDAccion" />
+    </Key>
+    <Property Name="IDAccion" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DescCorta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Boolean" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_AccionArticulos_Usuarios" FromRole="AccionArticulos" ToRole="Usuarios" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_AccionArticulos" FromRole="AccionArticulos" ToRole="Articulos" />
+  </EntityType>
+  <EntityType Name="Areas">
+    <Key>
+      <PropertyRef Name="IDArea" />
+    </Key>
+    <Property Name="IDArea" Type="Int32" Nullable="false" />
+    <Property Name="IDDireccion" Type="Int32" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DescCorta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="EsBodega" Type="Boolean" Nullable="false" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDEstadoInventario" Type="Int32" />
+    <NavigationProperty Name="Direcciones" Relationship="DBWNHMEModel.FK_Areas_Direcciones" FromRole="Areas" ToRole="Direcciones" />
+    <NavigationProperty Name="EstadoInventario" Relationship="DBWNHMEModel.FK_Areas_EstadoInventario" FromRole="Areas" ToRole="EstadoInventario" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Areas_Usuarios" FromRole="Areas" ToRole="Usuarios" />
+    <NavigationProperty Name="EquiposMac" Relationship="DBWNHMEModel.FK_EquiposMac_Areas" FromRole="Areas" ToRole="EquiposMac" />
+  </EntityType>
+  <EntityType Name="Articulos">
+    <Key>
+      <PropertyRef Name="IDArticulo" />
+    </Key>
+    <Property Name="IDArticulo" Type="Int32" Nullable="false" />
+    <Property Name="NArticulo" Type="Int32" />
+    <Property Name="CodigoDeBarras" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IDFamilia" Type="Int32" />
+    <Property Name="IDLaboratorio" Type="Int32" />
+    <Property Name="IDUnidadDeMedida" Type="Int32" />
+    <Property Name="IDAccion" Type="Int32" />
+    <Property Name="IDGenerico" Type="Int32" />
+    <Property Name="Concentracion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="StockMinimo" Type="Double" />
+    <Property Name="StockMaximo" Type="Double" />
+    <Property Name="StockRecomendado" Type="Double" />
+    <Property Name="PrecioVenta" Type="Double" />
+    <Property Name="PrecioVentaMinimo" Type="Double" />
+    <Property Name="EsLote" Type="Boolean" />
+    <Property Name="CostoPromedio" Type="Double" />
+    <Property Name="CostoReal" Type="Double" />
+    <Property Name="CostoCompra" Type="Double" />
+    <Property Name="CostoProyectado" Type="Double" />
+    <Property Name="Observacion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CodigoViejo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EsCodigoInterno" Type="Boolean" />
+    <Property Name="EsListadoINSS" Type="Boolean" />
+    <Property Name="IDEstanteAsignado" Type="Int32" />
+    <Property Name="EsNuevoListadoINSS" Type="Boolean" />
+    <Property Name="PrecioVentaDolar" Type="Double" />
+    <Property Name="IDProductoConvertir" Type="Int32" />
+    <Property Name="IDIndiceConvertir" Type="Int32" />
+    <Property Name="Presentacion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EsReuso" Type="Boolean" />
+    <Property Name="IDProductoReuso" Type="Int32" />
+    <Property Name="Seleccionar" Type="Boolean" />
+    <Property Name="IDTipoMedicamento" Type="Int32" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDEstadoInventario" Type="Int32" />
+    <NavigationProperty Name="AccionArticulos" Relationship="DBWNHMEModel.FK_Articulos_AccionArticulos" FromRole="Articulos" ToRole="AccionArticulos" />
+    <NavigationProperty Name="EstadoInventario" Relationship="DBWNHMEModel.FK_Articulos_EstadoInventario" FromRole="Articulos" ToRole="EstadoInventario" />
+    <NavigationProperty Name="Familias" Relationship="DBWNHMEModel.FK_Articulos_Familias" FromRole="Articulos" ToRole="Familias" />
+    <NavigationProperty Name="GenericoArticulos" Relationship="DBWNHMEModel.FK_Articulos_GenericoArticulos" FromRole="Articulos" ToRole="GenericoArticulos" />
+    <NavigationProperty Name="Laboratorios" Relationship="DBWNHMEModel.FK_Articulos_Laboratorios" FromRole="Articulos" ToRole="Laboratorios" />
+    <NavigationProperty Name="UnidadDeMedidas" Relationship="DBWNHMEModel.FK_Articulos_UnidadDeMedidas" FromRole="Articulos" ToRole="UnidadDeMedidas" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Articulos_Usuarios" FromRole="Articulos" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Direcciones">
+    <Key>
+      <PropertyRef Name="IDDireccion" />
+    </Key>
+    <Property Name="IDDireccion" Type="Int32" Nullable="false" />
+    <Property Name="IDUbicacion" Type="Int32" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Areas" Relationship="DBWNHMEModel.FK_Areas_Direcciones" FromRole="Direcciones" ToRole="Areas" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Direcciones_Usuarios" FromRole="Direcciones" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="EquiposMac">
+    <Key>
+      <PropertyRef Name="IDMac" />
+    </Key>
+    <Property Name="IDMac" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Mac" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TipoEquipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDArea" Type="Int32" />
+    <Property Name="Estado" Type="Boolean" />
+    <NavigationProperty Name="Areas" Relationship="DBWNHMEModel.FK_EquiposMac_Areas" FromRole="EquiposMac" ToRole="Areas" />
+  </EntityType>
+  <EntityType Name="EstadoInventario">
+    <Key>
+      <PropertyRef Name="IDEstadoInventario" />
+    </Key>
+    <Property Name="IDEstadoInventario" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Areas" Relationship="DBWNHMEModel.FK_Areas_EstadoInventario" FromRole="EstadoInventario" ToRole="Areas" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_EstadoInventario" FromRole="EstadoInventario" ToRole="Articulos" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_EstadoInventario_Usuarios" FromRole="EstadoInventario" ToRole="Usuarios" />
+    <NavigationProperty Name="Familias" Relationship="DBWNHMEModel.FK_Familias_EstadoInventario" FromRole="EstadoInventario" ToRole="Familias" />
+  </EntityType>
+  <EntityType Name="Familias">
+    <Key>
+      <PropertyRef Name="IDFamilia" />
+    </Key>
+    <Property Name="IDFamilia" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DescCorta" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Tipo" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDEstadoInventario" Type="Int32" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_Familias" FromRole="Familias" ToRole="Articulos" />
+    <NavigationProperty Name="EstadoInventario" Relationship="DBWNHMEModel.FK_Familias_EstadoInventario" FromRole="Familias" ToRole="EstadoInventario" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Familias_Usuarios" FromRole="Familias" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="GenericoArticulos">
+    <Key>
+      <PropertyRef Name="IDGenerico" />
+    </Key>
+    <Property Name="IDGenerico" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DescCorta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_GenericoArticulos" FromRole="GenericoArticulos" ToRole="Articulos" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_GenericoArticulos_Usuarios" FromRole="GenericoArticulos" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Laboratorios">
+    <Key>
+      <PropertyRef Name="IDLaboratorio" />
+    </Key>
+    <Property Name="IDLaboratorio" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Boolean" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_Laboratorios" FromRole="Laboratorios" ToRole="Articulos" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Laboratorios_Usuarios" FromRole="Laboratorios" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Permisos">
+    <Key>
+      <PropertyRef Name="IdPermiso" />
+    </Key>
+    <Property Name="IdPermiso" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Roles" Relationship="DBWNHMEModel.RolPermisos" FromRole="Permisos" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="IdRol" />
+    </Key>
+    <Property Name="IdRol" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Estado" Type="Boolean" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_Usuarios_Roles" FromRole="Roles" ToRole="Usuarios" />
+    <NavigationProperty Name="Permisos" Relationship="DBWNHMEModel.RolPermisos" FromRole="Roles" ToRole="Permisos" />
+  </EntityType>
+  <EntityType Name="TiposDeMov">
+    <Key>
+      <PropertyRef Name="IDTipoMov" />
+    </Key>
+    <Property Name="IDTipoMov" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DescCorta" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TipoMov" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_TiposDeMov_Usuarios" FromRole="TiposDeMov" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="UnidadDeMedidas">
+    <Key>
+      <PropertyRef Name="IDUnidadDeMedida" />
+    </Key>
+    <Property Name="IDUnidadDeMedida" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaModifica" Type="DateTime" Precision="3" />
+    <Property Name="Estado" Type="Boolean" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_UnidadDeMedidas" FromRole="UnidadDeMedidas" ToRole="Articulos" />
+    <NavigationProperty Name="Usuarios" Relationship="DBWNHMEModel.FK_UnidadDeMedidas_Usuarios" FromRole="UnidadDeMedidas" ToRole="Usuarios" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="IDUsuario" />
+    </Key>
+    <Property Name="IDUsuario" Type="Int32" Nullable="false" />
+    <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Clave" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="IdRol" Type="Int32" />
+    <Property Name="Estado" Type="Boolean" />
+    <Property Name="FechaCrea" Type="DateTime" Precision="3" />
+    <Property Name="FechaBaja" Type="DateTime" Precision="3" />
+    <Property Name="HostCrea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IDUsuarioCrea" Type="Int32" />
+    <Property Name="IDUsuarioEdita" Type="Int32" />
+    <Property Name="HostEdita" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AccionArticulos" Relationship="DBWNHMEModel.FK_AccionArticulos_Usuarios" FromRole="Usuarios" ToRole="AccionArticulos" />
+    <NavigationProperty Name="Areas" Relationship="DBWNHMEModel.FK_Areas_Usuarios" FromRole="Usuarios" ToRole="Areas" />
+    <NavigationProperty Name="Articulos" Relationship="DBWNHMEModel.FK_Articulos_Usuarios" FromRole="Usuarios" ToRole="Articulos" />
+    <NavigationProperty Name="Direcciones" Relationship="DBWNHMEModel.FK_Direcciones_Usuarios" FromRole="Usuarios" ToRole="Direcciones" />
+    <NavigationProperty Name="EstadoInventario" Relationship="DBWNHMEModel.FK_EstadoInventario_Usuarios" FromRole="Usuarios" ToRole="EstadoInventario" />
+    <NavigationProperty Name="Familias" Relationship="DBWNHMEModel.FK_Familias_Usuarios" FromRole="Usuarios" ToRole="Familias" />
+    <NavigationProperty Name="GenericoArticulos" Relationship="DBWNHMEModel.FK_GenericoArticulos_Usuarios" FromRole="Usuarios" ToRole="GenericoArticulos" />
+    <NavigationProperty Name="Laboratorios" Relationship="DBWNHMEModel.FK_Laboratorios_Usuarios" FromRole="Usuarios" ToRole="Laboratorios" />
+    <NavigationProperty Name="Roles" Relationship="DBWNHMEModel.FK_Usuarios_Roles" FromRole="Usuarios" ToRole="Roles" />
+    <NavigationProperty Name="TiposDeMov" Relationship="DBWNHMEModel.FK_TiposDeMov_Usuarios" FromRole="Usuarios" ToRole="TiposDeMov" />
+    <NavigationProperty Name="UnidadDeMedidas" Relationship="DBWNHMEModel.FK_UnidadDeMedidas_Usuarios" FromRole="Usuarios" ToRole="UnidadDeMedidas" />
+  </EntityType>
+  <Association Name="FK_AccionArticulos_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.AccionArticulos" Role="AccionArticulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="AccionArticulos">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_AccionArticulos">
+    <End Type="DBWNHMEModel.AccionArticulos" Role="AccionArticulos" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AccionArticulos">
+        <PropertyRef Name="IDAccion" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDAccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Areas_Direcciones">
+    <End Type="DBWNHMEModel.Direcciones" Role="Direcciones" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Areas" Role="Areas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Direcciones">
+        <PropertyRef Name="IDDireccion" />
+      </Principal>
+      <Dependent Role="Areas">
+        <PropertyRef Name="IDDireccion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Areas_EstadoInventario">
+    <End Type="DBWNHMEModel.EstadoInventario" Role="EstadoInventario" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Areas" Role="Areas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoInventario">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Principal>
+      <Dependent Role="Areas">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Areas_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Areas" Role="Areas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="Areas">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquiposMac_Areas">
+    <End Type="DBWNHMEModel.Areas" Role="Areas" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.EquiposMac" Role="EquiposMac" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Areas">
+        <PropertyRef Name="IDArea" />
+      </Principal>
+      <Dependent Role="EquiposMac">
+        <PropertyRef Name="IDArea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_EstadoInventario">
+    <End Type="DBWNHMEModel.EstadoInventario" Role="EstadoInventario" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoInventario">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_Familias">
+    <End Type="DBWNHMEModel.Familias" Role="Familias" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Familias">
+        <PropertyRef Name="IDFamilia" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDFamilia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_GenericoArticulos">
+    <End Type="DBWNHMEModel.GenericoArticulos" Role="GenericoArticulos" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GenericoArticulos">
+        <PropertyRef Name="IDGenerico" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDGenerico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_Laboratorios">
+    <End Type="DBWNHMEModel.Laboratorios" Role="Laboratorios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Laboratorios">
+        <PropertyRef Name="IDLaboratorio" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDLaboratorio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_UnidadDeMedidas">
+    <End Type="DBWNHMEModel.UnidadDeMedidas" Role="UnidadDeMedidas" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnidadDeMedidas">
+        <PropertyRef Name="IDUnidadDeMedida" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDUnidadDeMedida" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articulos_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Articulos" Role="Articulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="Articulos">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Direcciones_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Direcciones" Role="Direcciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="Direcciones">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadoInventario_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.EstadoInventario" Role="EstadoInventario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="EstadoInventario">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Familias_EstadoInventario">
+    <End Type="DBWNHMEModel.EstadoInventario" Role="EstadoInventario" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Familias" Role="Familias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EstadoInventario">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Principal>
+      <Dependent Role="Familias">
+        <PropertyRef Name="IDEstadoInventario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Familias_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Familias" Role="Familias" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="Familias">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GenericoArticulos_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.GenericoArticulos" Role="GenericoArticulos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="GenericoArticulos">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Laboratorios_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Laboratorios" Role="Laboratorios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="Laboratorios">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles">
+    <End Type="DBWNHMEModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="IdRol" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="IdRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TiposDeMov_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.TiposDeMov" Role="TiposDeMov" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="TiposDeMov">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UnidadDeMedidas_Usuarios">
+    <End Type="DBWNHMEModel.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+    <End Type="DBWNHMEModel.UnidadDeMedidas" Role="UnidadDeMedidas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="IDUsuario" />
+      </Principal>
+      <Dependent Role="UnidadDeMedidas">
+        <PropertyRef Name="IDUsuarioCrea" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RolPermisos">
+    <End Type="DBWNHMEModel.Permisos" Role="Permisos" Multiplicity="*" />
+    <End Type="DBWNHMEModel.Roles" Role="Roles" Multiplicity="*" />
+  </Association>
+</Schema>

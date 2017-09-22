@@ -1,0 +1,64 @@
+﻿@model IEnumerable<SysWebNHME.Models.TiposDeMov>
+
+<table id="tblMovimientos" class="table table-striped table-borde">
+    <thead>
+        <tr>
+            <th>
+                codigo
+            </th>
+            <th>
+                Descripción
+            </th>
+            <th>
+                Descripción Corta
+            </th>
+            <th>
+                Tipo de Movimiento
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                tipo
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IDTipoMov)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescCorta)
+                </td>
+                <td class="">
+                    @{ 
+                        string tipoMov = "";
+                        tipoMov = item.TipoMov == "E" ? "ENTRADA" : "SALIDA";
+                    }
+                    @tipoMov
+                </td>
+                <td>
+                    @{ 
+                        string ca = "";
+                        if (item.Estado)
+                        {
+                            ca = "Activo";
+                        }else{
+                            ca= "Inactivo";
+                        } 
+                    }
+                    @ca
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TipoMov)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1510b007e3e84d42a676735aecf4270a" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="DBWNHMEModel.AccionArticulos" Width="1.5" PointX="7.5" PointY="16.625" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Areas" Width="1.5" PointX="9.75" PointY="31.625" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Articulos" Width="1.5" PointX="9.75" PointY="20" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Direcciones" Width="1.5" PointX="7.5" PointY="24.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.EquiposMac" Width="1.5" PointX="12" PointY="33.5" />
+        <EntityTypeShape EntityType="DBWNHMEModel.EstadoInventario" Width="1.5" PointX="7.5" PointY="38" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Familias" Width="1.5" PointX="12.75" PointY="28.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.GenericoArticulos" Width="1.5" PointX="7.5" PointY="8.875" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Laboratorios" Width="1.5" PointX="7.5" PointY="33.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Permisos" Width="1.5" PointX="0.75" PointY="21.875" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Roles" Width="1.5" PointX="3" PointY="21.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.TiposDeMov" Width="1.5" PointX="7.5" PointY="20.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.UnidadDeMedidas" Width="1.5" PointX="7.5" PointY="12.75" />
+        <EntityTypeShape EntityType="DBWNHMEModel.Usuarios" Width="1.5" PointX="5.25" PointY="20" />
+        <AssociationConnector Association="DBWNHMEModel.FK_AccionArticulos_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_AccionArticulos" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Areas_Direcciones" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Areas_EstadoInventario" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Areas_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_EquiposMac_Areas" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_EstadoInventario" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_Familias" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_GenericoArticulos" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_Laboratorios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_UnidadDeMedidas" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Articulos_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Direcciones_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_EstadoInventario_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Familias_EstadoInventario" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Familias_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_GenericoArticulos_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Laboratorios_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_Usuarios_Roles" />
+        <AssociationConnector Association="DBWNHMEModel.FK_TiposDeMov_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.FK_UnidadDeMedidas_Usuarios" />
+        <AssociationConnector Association="DBWNHMEModel.RolPermisos" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,482 @@
+			/**********07-09-2017*/
+			CREATE PROCEDURE [dbo].[SP_CargarPermisos] 
+			@inRol integer
+			AS  
+			 SELECT R.IdPermiso,p.Descripcion 
+			from RolPermisos R inner join Permisos p on P.IdPermiso = R.IdPermiso where R.IdRol = @inRol
+			/*******08-09-2017 Nueva Tabla para llevar registros de mac******************/
+			CREATE TABLE [dbo].[EquiposMac](
+				[IDMac] [int] IDENTITY(1,1) NOT NULL,
+				[Mac] [nvarchar](20) NULL,
+				[Usuario] [varchar](50) NULL,
+				[TipoEquipo] [varchar](50) NULL,
+				[IDArea] [int] NULL,
+				[Estado] [bit] NULL,
+			 CONSTRAINT [PK_EquiposMac] PRIMARY KEY CLUSTERED 
+			(
+				[IDMac] ASC
+			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+			) ON [PRIMARY]
+			GO
+			/**********08-09-2017 tarde Nueva Tabla para Bodegas y areas***************/
+			CREATE TABLE [dbo].[Areas](
+				[IDArea] [int] NOT NULL,
+				[IDDireccion] [int] NULL,
+				[Descripcion] [varchar](50) NULL,
+				[DescCorta] [varchar](10) NULL,
+				[FechaCrea] [datetime] NULL,
+				[FechaModifica] [datetime] NULL,
+				[EsBodega] [bit] NOT NULL,
+				[Estado] [bit] NOT NULL,
+				[IDUsuarioCrea] [int] NULL,
+				[HostCrea] [varchar](50) NULL,
+			 CONSTRAINT [PK_Areas] PRIMARY KEY CLUSTERED 
+			(
+				[IDArea] ASC
+			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+			) ON [PRIMARY]
+			GO
+
+			ALTER TABLE [dbo].[Areas] ADD  CONSTRAINT [DF_Areas_EsBodega]  DEFAULT ((0)) FOR [EsBodega]
+			GO
+
+			ALTER TABLE [dbo].[Areas] ADD  CONSTRAINT [DF_Areas_Estado]  DEFAULT ((1)) FOR [Estado]
+			GO
+			/************08-09-2017 Update se agregan campos a la tabla*************/
+			ALTER TABLE [dbo].[Usuarios](
+				[IDUsuario] [int] NOT NULL,
+				[Usuario] [varchar](50) NULL,
+				[Nombre] [varchar](50) NULL,
+				[Clave] [varchar](200) NULL,
+				[IdRol] [int] NULL,
+				[Estado] [bit] NULL,
+				[FechaCrea] [datetime] NULL,
+				[FechaBaja] [datetime] NULL,
+				[HostCrea] [varchar](50) NULL,
+				[IDUsuarioCrea] [int] NULL,
+			 CONSTRAINT [PK_Usuarios] PRIMARY KEY CLUSTERED 
+			(
+				[IDUsuario] ASC
+			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+			) ON [PRIMARY]
+			GO
+
+			ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD  CONSTRAINT [FK_Usuarios_Roles] FOREIGN KEY([IdRol])
+			REFERENCES [dbo].[Roles] ([IdRol])
+			GO
+
+			ALTER TABLE [dbo].[Usuarios] CHECK CONSTRAINT [FK_Usuarios_Roles]
+			GO
+			/************11-09-2017 Crear Nueva Tabla donde se almacenan los conceptos de movimientos al inventario*************/
+			CREATE TABLE [dbo].[TiposDeMov](
+				[IDTipoMov] [int] NOT NULL,
+				[Descripcion] [varchar](50) NULL,
+				[DescCorta] [varchar](10) NULL,
+				[TipoMov] [varchar](5) NULL,
+				[FechaCrea] [datetime] NULL,
+				[FechaModifica] [datetime] NULL,
+				[Estado] [bit] NOT NULL,
+				[IDUsuarioCrea] [int] NULL,
+				[HostCrea] [varchar](50) NULL,
+			 CONSTRAINT [PK_TiposDeMov] PRIMARY KEY CLUSTERED 
+			(
+				[IDTipoMov] ASC
+			)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+			) ON [PRIMARY]
+			GO
+
+			ALTER TABLE [dbo].[TiposDeMov] ADD  CONSTRAINT [DF_TiposDeMov_Estado]  DEFAULT ((1)) FOR [Estado]
+			GO
+
+			/********************19-09-2017*******************************/
+
+			USE [DBWNHME]
+			GO
+			/****** Object:  StoredProcedure [dbo].[SP_AdminMovimientos]    Script Date: 9/19/2017 8:06:54 AM ******/
+			SET ANSI_NULLS ON
+			GO
+			SET QUOTED_IDENTIFIER ON
+			GO
+			-- =============================================
+			-- Author:		<Author,,Name>
+			-- Create date: <Create Date,,>
+			-- Description:	<Description,,>
+			-- =============================================
+			ALTER PROCEDURE [dbo].[SP_AdminMovimientos]
+				@IDTipoMov INT = 1,
+				@Descripcion NVARCHAR(50),
+				@DescCorta NVARCHAR(10),
+				@TipoMov NVARCHAR (5),
+				/*@FechaCrea DATETIME,
+				@FechaModifica DATETIME,*/
+				@Estado BIT,
+				@IDUsuarioCrea INT,
+				@HostCrea VARCHAR(50),
+				@IDUsuarioEdita INT = 0,
+				@HostEdita VARCHAR(50) = '',
+				@Proceso INT = 1,
+				@Mensaje VARCHAR(100) OUTPUT
+			AS
+			BEGIN
+			BEGIN TRANSACTION
+				SET @Mensaje = '';
+				IF @Proceso =1
+				BEGIN
+					IF EXISTS (SELECT Descripcion FROM TiposDeMov WHERE Descripcion = @Descripcion)
+					BEGIN
+						SET @Mensaje = 'La descripcion del Tipo de Movimiento ya Existe'
+						RETURN -1
+					END 
+					ELSE
+						INSERT INTO TiposDeMov VALUES ((SELECT ISNULL(MAX(IDTipoMov),0) + 1 FROM TiposDeMov), @Descripcion, @DescCorta, @TipoMov, GETDATE(),NULL,1,@IDUsuarioCrea,@HostCrea,null,null);
+						SET @Mensaje = 'Movimiento Ingresado'
+					END
+				END
+				IF @Proceso =2
+				BEGIN
+					UPDATE TiposDeMov SET Descripcion = @Descripcion , DescCorta = @DescCorta, TipoMov = @TipoMov
+					WHERE IDTipoMov = @IDTipoMov
+				END
+				IF @Proceso =3
+				BEGIN
+					UPDATE TiposDeMov SET Estado = ~Estado
+					WHERE IDTipoMov = @IDTipoMov
+					SET @Mensaje = 'Estado Cambiado'
+				END
+				IF @@ERROR = 0
+						BEGIN
+							COMMIT TRANSACTION
+						END
+					ELSE
+						BEGIN
+							ROLLBACK TRANSACTION
+						END
+/********************19-09-2017 NUEVAS TABLAS*******************************/
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[AccionArticulos]    Script Date: 19/09/2017 03:53:28 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[AccionArticulos](
+	[IDAccion] [int] NOT NULL,
+	[Descripcion] [varchar](150) NULL,
+	[DescCorta] [varchar](10) NULL,
+	[Estado] [bit] NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+ CONSTRAINT [PK_AccionArticulos] PRIMARY KEY CLUSTERED 
+(
+	[IDAccion] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[AccionArticulos]  WITH CHECK ADD  CONSTRAINT [FK_AccionArticulos_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[AccionArticulos] CHECK CONSTRAINT [FK_AccionArticulos_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[Articulos]    Script Date: 19/09/2017 03:53:58 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Articulos](
+	[IDArticulo] [int] NOT NULL,
+	[NArticulo] [int] NULL,
+	[CodigoDeBarras] [nvarchar](50) NULL,
+	[Descripcion] [varchar](100) NULL,
+	[IDFamilia] [int] NULL,
+	[IDLaboratorio] [int] NULL,
+	[IDUnidadDeMedida] [int] NULL,
+	[IDAccion] [int] NULL,
+	[IDGenerico] [int] NULL,
+	[Concentracion] [varchar](150) NULL,
+	[StockMinimo] [float] NULL,
+	[StockMaximo] [float] NULL,
+	[StockRecomendado] [float] NULL,
+	[PrecioVenta] [float] NULL,
+	[PrecioVentaMinimo] [float] NULL,
+	[EsLote] [bit] NULL,
+	[CostoPromedio] [float] NULL,
+	[CostoReal] [float] NULL,
+	[CostoCompra] [float] NULL,
+	[CostoProyectado] [float] NULL,
+	[Observacion] [varchar](250) NULL,
+	[Estado] [bit] NULL,
+	[CodigoViejo] [varchar](50) NULL,
+	[EsCodigoInterno] [bit] NULL,
+	[EsListadoINSS] [bit] NULL,
+	[IDEstanteAsignado] [int] NULL,
+	[EsNuevoListadoINSS] [bit] NULL,
+	[PrecioVentaDolar] [float] NULL,
+	[IDProductoConvertir] [int] NULL,
+	[IDIndiceConvertir] [int] NULL,
+	[Presentacion] [varchar](150) NULL,
+	[EsReuso] [bit] NULL,
+	[IDProductoReuso] [int] NULL,
+	[Seleccionar] [bit] NULL,
+	[IDTipoMedicamento] [int] NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+	[IDEstadoInventario] [int] NULL,
+ CONSTRAINT [PK_Articulos] PRIMARY KEY CLUSTERED 
+(
+	[IDArticulo] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_AccionArticulos] FOREIGN KEY([IDAccion])
+REFERENCES [dbo].[AccionArticulos] ([IDAccion])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_AccionArticulos]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_EstadoInventario] FOREIGN KEY([IDEstadoInventario])
+REFERENCES [dbo].[EstadoInventario] ([IDEstado])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_EstadoInventario]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_Familias] FOREIGN KEY([IDFamilia])
+REFERENCES [dbo].[Familias] ([IDFamilia])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_Familias]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_GenericoArticulos] FOREIGN KEY([IDGenerico])
+REFERENCES [dbo].[GenericoArticulos] ([IDGenerico])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_GenericoArticulos]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_Laboratorios] FOREIGN KEY([IDLaboratorio])
+REFERENCES [dbo].[Laboratorios] ([IDLaboratorio])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_Laboratorios]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_UnidadDeMedidas] FOREIGN KEY([IDUnidadDeMedida])
+REFERENCES [dbo].[UnidadDeMedidas] ([IDUnidadDeMedida])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_UnidadDeMedidas]
+GO
+
+ALTER TABLE [dbo].[Articulos]  WITH CHECK ADD  CONSTRAINT [FK_Articulos_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[Articulos] CHECK CONSTRAINT [FK_Articulos_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[EstadoInventario]    Script Date: 19/09/2017 03:54:30 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[EstadoInventario](
+	[IDEstado] [int] NOT NULL,
+	[Descripcion] [varchar](50) NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+ CONSTRAINT [PK_EstadoInventario] PRIMARY KEY CLUSTERED 
+(
+	[IDEstado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[EstadoInventario]  WITH CHECK ADD  CONSTRAINT [FK_EstadoInventario_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[EstadoInventario] CHECK CONSTRAINT [FK_EstadoInventario_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[Familias]    Script Date: 19/09/2017 03:54:47 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Familias](
+	[IDFamilia] [int] NOT NULL,
+	[Descripcion] [varchar](50) NULL,
+	[DescCorta] [varchar](10) NULL,
+	[Tipo] [varchar](1) NULL,
+	[Estado] [bit] NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+ CONSTRAINT [PK_Familias] PRIMARY KEY CLUSTERED 
+(
+	[IDFamilia] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Familias]  WITH CHECK ADD  CONSTRAINT [FK_Familias_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[Familias] CHECK CONSTRAINT [FK_Familias_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[GenericoArticulos]    Script Date: 19/09/2017 03:55:02 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[GenericoArticulos](
+	[IDGenerico] [int] NOT NULL,
+	[Descripcion] [varchar](150) NULL,
+	[DescCorta] [varchar](10) NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+ CONSTRAINT [PK_GenericoArticulos] PRIMARY KEY CLUSTERED 
+(
+	[IDGenerico] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[GenericoArticulos]  WITH CHECK ADD  CONSTRAINT [FK_GenericoArticulos_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[GenericoArticulos] CHECK CONSTRAINT [FK_GenericoArticulos_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[Laboratorios]    Script Date: 19/09/2017 03:55:20 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Laboratorios](
+	[IDLaboratorio] [int] NOT NULL,
+	[Nombre] [varchar](150) NULL,
+	[Direccion] [varchar](100) NULL,
+	[Telefono] [varchar](50) NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+	[Estado] [bit] NULL,
+ CONSTRAINT [PK_Laboratorios] PRIMARY KEY CLUSTERED 
+(
+	[IDLaboratorio] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Laboratorios]  WITH CHECK ADD  CONSTRAINT [FK_Laboratorios_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[Laboratorios] CHECK CONSTRAINT [FK_Laboratorios_Usuarios]
+GO
+
+
+
+USE [DBWNHME]
+GO
+
+/****** Object:  Table [dbo].[UnidadDeMedidas]    Script Date: 19/09/2017 03:55:47 p. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[UnidadDeMedidas](
+	[IDUnidadDeMedida] [int] NOT NULL,
+	[Descripcion] [varchar](50) NULL,
+	[FechaCrea] [datetime] NULL,
+	[FechaModifica] [datetime] NULL,
+	[Estado] [bit] NULL,
+	[IDUsuarioCrea] [int] NULL,
+	[HostCrea] [varchar](50) NULL,
+	[IDUsuarioEdita] [int] NULL,
+	[HostEdita] [varchar](50) NULL,
+ CONSTRAINT [PK_UnidadDeMedida] PRIMARY KEY CLUSTERED 
+(
+	[IDUnidadDeMedida] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[UnidadDeMedidas]  WITH CHECK ADD  CONSTRAINT [FK_UnidadDeMedidas_Usuarios] FOREIGN KEY([IDUsuarioCrea])
+REFERENCES [dbo].[Usuarios] ([IDUsuario])
+GO
+
+ALTER TABLE [dbo].[UnidadDeMedidas] CHECK CONSTRAINT [FK_UnidadDeMedidas_Usuarios]
+GO

@@ -1,0 +1,213 @@
+﻿@model SysWebNHME.Models.Areas
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#collapseComponents" data-toggle="collapse" data-parent="#exampleAccordion">Catalogos</a>
+    </li>
+    <li class="breadcrumb-item active">Sub Bodegas</li>
+</ol>
+@if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(5)|| SysWebNHME.Clases.SessionFilter.ValidarPermiso(6)|| SysWebNHME.Clases.SessionFilter.ValidarPermiso(7))
+{
+    <div class="row">
+        <div class="col text-right">
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(5))
+            {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            }
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(6))
+            {
+                <button type="button" class="btn btn-primary" id="btnEditar">
+                    <i class="fa fa-pencil"></i> Editar
+                </button>
+            }
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(7))
+            {
+                <button type="button" class="btn btn-primary" id="btnCambioEstado">
+                    <i class="fa fa-exchange"></i> Estado
+                </button>
+            }                      
+        </div>
+    </div>   
+}
+<div class="row">
+    <div class="col">
+    @if (@ViewBag.mensaje != null && @ViewBag.mensaje != "")
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+            <strong>@ViewBag.mensaje</strong>
+        </div>
+    }
+    </div>   
+</div>
+    <br />
+<!--Cargar vistas Parciales-->
+    <div class="row">
+        @{Html.RenderAction("ListaAreas");}
+    </div>
+<!--Modal para Agregar las Areas-->
+    <div class="modal fade" id="ModalCreate">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nueva Sub Bodega</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("Create", "Areas", FormMethod.Post, new { id = "frmCreate" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+                            <div class="row">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.IDDireccion, "Direccion", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.DropDownList("Direcciones", null, htmlAttributes: new { @class = "CampFormulario", data_toggle="popover", data_content="Seleccione una direccion",title="Error"})
+                                        @Html.ValidationMessageFor(model => model.IDDireccion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.EsBodega, "Es Bodega", htmlAttributes: new { @class = "control-label col-md-12" })
+                                    <div class="col-md-6">
+                                        <div class="checkbox">
+                                            @Html.EditorFor(model => model.EsBodega, new { htmlAttributes = new { @class = "CampFormulario" } })
+                                            @Html.ValidationMessageFor(model => model.EsBodega, "", new { @class = "text-danger" })
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "CampFormulario", maxlength = "50", data_toggle = "popover", data_content = "Digite una Descripción", title = "Error" } })
+                                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DescCorta, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.DescCorta, new { htmlAttributes = new { @class = "CampFormulario", maxlength = "10", data_toggle = "popover", data_content = "Digite una descripción corta", title = "Error" } })
+                                        @Html.ValidationMessageFor(model => model.DescCorta, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCrear" type="button" class="btn btn-primary">Crear</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--Modal para editar las Areas-->
+<div class="modal fade" id="ModalEditar">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Editar Sub Bodega</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Editar", "Areas", FormMethod.Post, new { id = "frmEditar" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <div class="row">
+                            @Html.EditorFor(model => model.IDArea, new { htmlAttributes = new { id = "IdAreaEditar", Type="hidden", @class = "CampFormulario" } })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.IDDireccion, "Direccion", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.DropDownList("Direcciones", null, htmlAttributes: new {id="DireccionesEditar", @class = "CampFormulario", data_toggle = "popover", data_content = "Seleccione una direccion", title = "Error" })
+                                    @Html.ValidationMessageFor(model => model.IDDireccion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.EsBodega, "Es Bodega", htmlAttributes: new { @class = "control-label col-md-12" })
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.EsBodega, new { htmlAttributes = new { id = "EsBodegaEditar", @class = "CampFormulario" } })
+                                        @Html.ValidationMessageFor(model => model.EsBodega, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { id = "DescripcionEditar", @class = "CampFormulario", maxlength = "50", data_toggle = "popover", data_content = "Digite una Descripción", title = "Campo Requerido" } })
+                                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.DescCorta, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @Html.EditorFor(model => model.DescCorta, new { htmlAttributes = new { id = "DescCortaEditar", @class = "CampFormulario", maxlength = "10", data_toggle = "popover", data_content = "Digite una descripción corta", title = "Campo Requerido" } })
+                                    @Html.ValidationMessageFor(model => model.DescCorta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="btnEditarValidar" type="button" class="btn btn-primary">Editar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>          
+        </div>
+    </div>
+</div>
+ <!-- Modal para Dar de baja a la sub bodega -->
+<div class="modal fade" id="ConfirmacionBajaAlta">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Estado Sub Bodegas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("BajaAlta", "Areas", FormMethod.Post, new { id = "frmBajaAlta" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.EditorFor(model => model.IDArea, new { htmlAttributes = new { id = "IdAreaBajaAlta", Type = "hidden", @class = "CampFormulario" } })
+                    @Html.DropDownList("EstadoInventario", null, htmlAttributes: new { id = "IDEstadoInventario", @class = "CampFormulario", data_toggle = "popover", data_content = "Seleccione Un Estado", title = "Error" })
+                    <br />
+                    <div class="modal-body">
+                        Click en "Aceptar" para cambiar el estado o "No" para cancelar.
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="btnBajaAlta" type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>            
+        </div>
+    </div>
+</div>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Content/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/JSSysWebNHME/Areas.js"></script>

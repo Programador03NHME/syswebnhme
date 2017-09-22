@@ -1,0 +1,90 @@
+﻿@model SysWebNHME.Models.Usuarios
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin CSS -->
+    <link href="~/Content/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    @*<link type="text/scss" href="~/Content/sb-admin.css" rel="stylesheet" />*@
+    <link type="text/css" href="~/Content/sb-admin.css" rel="stylesheet" />  
+</head>
+<body class="loginBody">
+    <div class="row Logindiv">
+        <div class="col-lg-6">
+            @* seccion imagen*@
+            <div class="row text-center">
+                <div class="col-xs-offset-1 col-md-offset-1 col-lg-11 col-lg-offset-1 col-sm-offset-1">
+                    <img src="~/Content/Images/LogoNHME.png" class="Loginimg img-responsive" alt="Responsive image">
+                    <h1 class="LoginTituloSistema">Sistema ERP</h1>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            @* seccion login *@
+            <div class="row text-center">
+                <div class="col-xs-10 col-xs-offset-1 col-md-4 col-lg-6 col-sm-6  col-sm-offset-3 col-md-offset-4 col-lg-offset-3 col-lg-offset-1">
+                    <h1 class="Logintitulo">Iniciar Sesion</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-md-4 col-lg-6 col-sm-6  col-sm-offset-3 col-md-offset-4 col-lg-offset-3">
+                    @using (Html.BeginForm("Login", "Usuarios", FormMethod.Post, new { id = "FrmLogin" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.Usuario, new { @class = "Loginlabel" })
+                            @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "Logintxt form-control", placeholder = "Usuario", data_toggle = "popover", data_content = "Digite el usuario", title = "Error", type = "text" } })
+                            @Html.ValidationMessageFor(a => a.Usuario)
+                        </div>
+                        <div class="form-group">         
+                            @Html.LabelFor(a => a.Clave, new { @class = "Loginlabel" })                  
+                            @Html.EditorFor(model => model.Clave, new { htmlAttributes = new { @class = "Logintxt form-control", placeholder = "Clave",  type = "password" , data_toggle = "popover", data_content = "Digite la Clave", title = "Error"} })
+                            @Html.ValidationMessageFor(a => a.Clave)
+                        </div>
+                        if (@ViewBag.Message != null)
+                        {
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button> 
+                                <strong>@ViewBag.Message</strong>
+                            </div>
+                        }
+                        <div class="text-right">
+                            <button id="btn_Cancel" type="reset" class="btn btn-secondary">
+                                <i class="fa fa-ban"></i>CANCELAR
+                            </button>
+                            <button id="btn_Aceptar" type="button" class="btn btn-primary">
+                                <i class="fa fa-check"></i>ACEPTAR
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        </div>
+</body>
+</html>
+<footer>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Content/vendor/popper/popper.js"></script>
+    
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.md5.js"></script>
+    
+    @Scripts.Render("~/Scripts/JSSysWebNHME/Login.js")
+</footer>

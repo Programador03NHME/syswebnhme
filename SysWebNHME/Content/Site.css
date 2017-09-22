@@ -1,0 +1,77 @@
+﻿body {
+   /* position:relative;
+    margin:0;
+    padding-bottom:6rem;
+    min-height: 100%;  */
+   /*padding-top: 50px;*/
+   padding-bottom: 20px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+footer{
+    background-image: url('Images/Fondo.jpg');
+    position:fixed;
+    height:40px;
+    bottom:0;
+    width:100%;
+    padding-top:10px;
+    color:white;
+    text-align: center;
+}
+
+
+/***************Clases CSS Login***************************************************************/
+.loginBody {    
+    background-image: url('Images/Fondo.jpg');
+    padding-top:0;   
+}
+.Loginlabel{
+    font-size: 20px;
+    color: white;
+}
+.Logintxt{
+    max-width:100%;
+}
+.Logintitulo{   
+    color:white;
+    font-family: initial;
+    margin-top: 0%;    
+}
+.Loginimg{
+    display: block;
+    margin: 0 auto;
+}
+.LoginTituloSistema {
+    color:white;
+    font-family: initial;
+}
+.Logindiv{
+    margin-top:10%;
+}
+/***************************************Menu Principal*************************************/
+
+.navbar{
+    background-image: url('Images/Fondo.jpg');
+    position: initial;
+}
+.MainImages{
+    display: block;
+    margin: 0 auto;
+}

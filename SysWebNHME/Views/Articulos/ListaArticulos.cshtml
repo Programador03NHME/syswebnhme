@@ -1,0 +1,256 @@
+﻿@model IEnumerable<SysWebNHME.Models.Articulos>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NArticulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CodigoDeBarras)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Concentracion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockMinimo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockMaximo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockRecomendado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioVentaMinimo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EsLote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostoPromedio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostoReal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostoCompra)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CostoProyectado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Observacion)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.CodigoViejo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EsCodigoInterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EsListadoINSS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDEstanteAsignado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EsNuevoListadoINSS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioVentaDolar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDProductoConvertir)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDIndiceConvertir)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Presentacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EsReuso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDProductoReuso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seleccionar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDTipoMedicamento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaCrea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaModifica)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostCrea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDUsuarioEdita)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostEdita)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccionArticulos.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoInventario.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Familias.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GenericoArticulos.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Laboratorios.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnidadDeMedidas.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuarios.Usuario)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NArticulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodigoDeBarras)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Concentracion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockMinimo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockMaximo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockRecomendado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecioVenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecioVentaMinimo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EsLote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CostoPromedio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CostoReal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CostoCompra)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CostoProyectado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Observacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CodigoViejo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EsCodigoInterno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EsListadoINSS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDEstanteAsignado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EsNuevoListadoINSS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PrecioVentaDolar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDProductoConvertir)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDIndiceConvertir)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Presentacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EsReuso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDProductoReuso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seleccionar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDTipoMedicamento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaCrea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaModifica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostCrea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDUsuarioEdita)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostEdita)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccionArticulos.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoInventario.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Familias.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GenericoArticulos.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Laboratorios.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnidadDeMedidas.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuarios.Usuario)
+        </td>
+    </tr>
+}
+
+</table>

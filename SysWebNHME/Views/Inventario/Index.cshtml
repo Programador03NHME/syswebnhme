@@ -1,0 +1,207 @@
+﻿@model SysWebNHME.Models.TiposDeMov
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#collapseComponents" data-toggle="collapse" data-parent="#exampleAccordion">Catalogos</a>
+    </li>
+    <li class="breadcrumb-item active">Conceptos de Inventario</li>
+</ol>
+
+
+@if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(5) || SysWebNHME.Clases.SessionFilter.ValidarPermiso(6) || SysWebNHME.Clases.SessionFilter.ValidarPermiso(7))
+{
+    <div class="row">
+        <div class="col text-right">
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(5))
+            {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate">
+                    <i class="fa fa-plus"></i> Nuevo
+                </button>
+            }
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(6))
+            {
+                <button type="button" class="btn btn-primary" id="btnEditar">
+                    <i class="fa fa-pencil"></i> Editar
+                </button>
+            }
+            @if (SysWebNHME.Clases.SessionFilter.ValidarPermiso(7))
+            {
+                <button type="button" class="btn btn-primary" onclick="bajaMo()">
+                    <i class="fa fa-exchange"></i> Estado
+                </button>
+            }
+        </div>
+    </div>
+    <br />
+}
+
+@if (@ViewBag.mensaje != null && @ViewBag.mensaje != "")
+{
+<div class="row">
+    <div class="col">
+        
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <strong>@ViewBag.mensaje</strong>
+            </div>       
+    </div>
+</div>
+}
+
+
+<div class="row">
+    @{Html.RenderAction("ListadoMovimientos");}
+</div>
+
+<!--Modal para Agregar las Movimientos-->
+<div class="modal fade" id="ModalCreate">
+    <div class="modalCrear modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo Tipo de Movimiento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Inventario", FormMethod.Post, new { id = "frmCreate" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="Descripcion">Descripcion</label>
+                                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", data_toggle = "popover", data_content = "Digite una descripción", title = "Error" } })
+                                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                <small id="Descripcion" class="form-text text-muted">Descripción del movimiento.</small>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="Descripcion">Descripcion Corta</label>
+                                @Html.EditorFor(model => model.DescCorta, new { htmlAttributes = new { @class = "form-control", data_toggle = "popover", data_content = "Seleccione una breve descripción", title = "Error" } })
+                                @Html.ValidationMessageFor(model => model.DescCorta, "", new { @class = "text-danger" })
+                                <small id="Descripcion" class="form-text text-muted">Breve descripción.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="TipoMov">Tipo de Movimiento</label>
+                                @*@Html.EditorFor(model => model.TipoMov, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TipoMov, "", new { @class = "text-danger" })*@
+                                <select class="custom-select form-control" id="TipoMov" name="TipoMov" data-toggle="popover" , data-content="Seleccione una direccion" ,title="Error">
+                                    <option value="" disables>Seleccione una opción...</option>
+                                    <option value="S">SALIDA</option>
+                                    <option value="E">ENTRADA</option>
+                                </select>
+                                <small id="Descripcion" class="form-text text-muted">Tipo del movimiento (E,S...)</small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="btnCrear" type="button" class="btn btn-primary">Crear</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal para Editar las Movimientos-->
+<div class="modal fade" id="ModalEditar">
+    <div class="modalCrear modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edición de Movimiento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Editar", "Inventario", FormMethod.Post, new { id = "frmEditar" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="Descripcion">Descripcion</label>
+                                @Html.EditorFor(model => model.IDTipoMov, new { htmlAttributes = new { id = "IDTipoMov", Type = "hidden", @class = "CampFormulario" } })
+                                @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { id = "DescripcionEdit", @class = "form-control", data_toggle = "popover", data_content = "Digite una descripción", title = "Error" } })
+                                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                <small id="Descripcion" class="form-text text-muted">Descripción del movimiento.</small>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="Descripcion">Descripcion Corta</label>
+                                @Html.EditorFor(model => model.DescCorta, new { htmlAttributes = new { id = "DescCortaEdit", @class = "form-control", data_toggle = "popover", data_content = "Seleccione una breve descripción", title = "Error" } })
+                                @Html.ValidationMessageFor(model => model.DescCorta, "", new { @class = "text-danger" })
+                                <small id="Descripcion" class="form-text text-muted">Breve descripción.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="TipoMov">Tipo de Movimiento</label>
+                                @*@Html.EditorFor(model => model.TipoMov, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TipoMov, "", new { @class = "text-danger" })*@
+                                <select class="custom-select form-control" id="TipoMovEdit" name="TipoMov" data-toggle="popover" , data-content="Seleccione una direccion" ,title="Error">
+                                    <option value="" disables>Seleccione..</option>
+                                    <option value="S">SALIDA</option>
+                                    <option value="E">ENTRADA</option>
+                                </select>
+                                <small id="Descripcion" class="form-text text-muted">Tipo del movimiento (E,S...)</small>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="btnEditarValidar" type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Dar de baja al movimiento -->
+<div class="modal fade" id="ConfirmacionBajaAlta">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Cambiar estado de Movimiento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("BajaAlta", "Inventario", FormMethod.Post, new { id = "frmBajaAlta" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.EditorFor(model => model.IDTipoMov, new { htmlAttributes = new { id = "IDTipoMovBaja", Type = "hidden", @class = "CampFormulario" } })
+                    <div class="modal-body">
+                        Seleccione "Aceptar" para cambiar el estado o "Cerrar" para cancelar.
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button id="btnBajaAlta" type="button" class="btn btn-primary">Aceptar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Content/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Scripts/JSSysWebNHME/Inventario.js"></script>

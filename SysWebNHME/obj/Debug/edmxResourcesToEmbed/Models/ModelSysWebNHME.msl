@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBWNHMEModelStoreContainer" CdmEntityContainer="DBWNHMEEntities">
+    <FunctionImportMapping FunctionImportName="SP_CargarPermisos" FunctionName="DBWNHMEModel.Store.SP_CargarPermisos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="DBWNHMEModel.SP_CargarPermisos_Result">
+          <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_AdminAreas" FunctionName="DBWNHMEModel.Store.SP_AdminAreas" />
+    <FunctionImportMapping FunctionImportName="SP_AdminMovimientos" FunctionName="DBWNHMEModel.Store.SP_AdminMovimientos" />
+    <EntitySetMapping Name="AccionArticulos">
+      <EntityTypeMapping TypeName="DBWNHMEModel.AccionArticulos">
+        <MappingFragment StoreEntitySet="AccionArticulos">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="DescCorta" ColumnName="DescCorta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDAccion" ColumnName="IDAccion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Areas">
+        <MappingFragment StoreEntitySet="Areas">
+          <ScalarProperty Name="IDEstadoInventario" ColumnName="IDEstadoInventario" />
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="EsBodega" ColumnName="EsBodega" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="DescCorta" ColumnName="DescCorta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDDireccion" ColumnName="IDDireccion" />
+          <ScalarProperty Name="IDArea" ColumnName="IDArea" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Articulos">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Articulos">
+        <MappingFragment StoreEntitySet="Articulos">
+          <ScalarProperty Name="IDEstadoInventario" ColumnName="IDEstadoInventario" />
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="IDTipoMedicamento" ColumnName="IDTipoMedicamento" />
+          <ScalarProperty Name="Seleccionar" ColumnName="Seleccionar" />
+          <ScalarProperty Name="IDProductoReuso" ColumnName="IDProductoReuso" />
+          <ScalarProperty Name="EsReuso" ColumnName="EsReuso" />
+          <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
+          <ScalarProperty Name="IDIndiceConvertir" ColumnName="IDIndiceConvertir" />
+          <ScalarProperty Name="IDProductoConvertir" ColumnName="IDProductoConvertir" />
+          <ScalarProperty Name="PrecioVentaDolar" ColumnName="PrecioVentaDolar" />
+          <ScalarProperty Name="EsNuevoListadoINSS" ColumnName="EsNuevoListadoINSS" />
+          <ScalarProperty Name="IDEstanteAsignado" ColumnName="IDEstanteAsignado" />
+          <ScalarProperty Name="EsListadoINSS" ColumnName="EsListadoINSS" />
+          <ScalarProperty Name="EsCodigoInterno" ColumnName="EsCodigoInterno" />
+          <ScalarProperty Name="CodigoViejo" ColumnName="CodigoViejo" />
+          <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+          <ScalarProperty Name="CostoProyectado" ColumnName="CostoProyectado" />
+          <ScalarProperty Name="CostoCompra" ColumnName="CostoCompra" />
+          <ScalarProperty Name="CostoReal" ColumnName="CostoReal" />
+          <ScalarProperty Name="CostoPromedio" ColumnName="CostoPromedio" />
+          <ScalarProperty Name="EsLote" ColumnName="EsLote" />
+          <ScalarProperty Name="PrecioVentaMinimo" ColumnName="PrecioVentaMinimo" />
+          <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+          <ScalarProperty Name="StockRecomendado" ColumnName="StockRecomendado" />
+          <ScalarProperty Name="StockMaximo" ColumnName="StockMaximo" />
+          <ScalarProperty Name="StockMinimo" ColumnName="StockMinimo" />
+          <ScalarProperty Name="Concentracion" ColumnName="Concentracion" />
+          <ScalarProperty Name="IDGenerico" ColumnName="IDGenerico" />
+          <ScalarProperty Name="IDAccion" ColumnName="IDAccion" />
+          <ScalarProperty Name="IDUnidadDeMedida" ColumnName="IDUnidadDeMedida" />
+          <ScalarProperty Name="IDLaboratorio" ColumnName="IDLaboratorio" />
+          <ScalarProperty Name="IDFamilia" ColumnName="IDFamilia" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="CodigoDeBarras" ColumnName="CodigoDeBarras" />
+          <ScalarProperty Name="NArticulo" ColumnName="NArticulo" />
+          <ScalarProperty Name="IDArticulo" ColumnName="IDArticulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Direcciones">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Direcciones">
+        <MappingFragment StoreEntitySet="Direcciones">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDUbicacion" ColumnName="IDUbicacion" />
+          <ScalarProperty Name="IDDireccion" ColumnName="IDDireccion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EquiposMac">
+      <EntityTypeMapping TypeName="DBWNHMEModel.EquiposMac">
+        <MappingFragment StoreEntitySet="EquiposMac">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="IDArea" ColumnName="IDArea" />
+          <ScalarProperty Name="TipoEquipo" ColumnName="TipoEquipo" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="Mac" ColumnName="Mac" />
+          <ScalarProperty Name="IDMac" ColumnName="IDMac" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstadoInventario">
+      <EntityTypeMapping TypeName="DBWNHMEModel.EstadoInventario">
+        <MappingFragment StoreEntitySet="EstadoInventario">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDEstadoInventario" ColumnName="IDEstadoInventario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Familias">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Familias">
+        <MappingFragment StoreEntitySet="Familias">
+          <ScalarProperty Name="IDEstadoInventario" ColumnName="IDEstadoInventario" />
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="DescCorta" ColumnName="DescCorta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDFamilia" ColumnName="IDFamilia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GenericoArticulos">
+      <EntityTypeMapping TypeName="DBWNHMEModel.GenericoArticulos">
+        <MappingFragment StoreEntitySet="GenericoArticulos">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="DescCorta" ColumnName="DescCorta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDGenerico" ColumnName="IDGenerico" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Laboratorios">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Laboratorios">
+        <MappingFragment StoreEntitySet="Laboratorios">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="IDLaboratorio" ColumnName="IDLaboratorio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Permisos">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Permisos">
+        <MappingFragment StoreEntitySet="Permisos">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiposDeMov">
+      <EntityTypeMapping TypeName="DBWNHMEModel.TiposDeMov">
+        <MappingFragment StoreEntitySet="TiposDeMov">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="TipoMov" ColumnName="TipoMov" />
+          <ScalarProperty Name="DescCorta" ColumnName="DescCorta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDTipoMov" ColumnName="IDTipoMov" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnidadDeMedidas">
+      <EntityTypeMapping TypeName="DBWNHMEModel.UnidadDeMedidas">
+        <MappingFragment StoreEntitySet="UnidadDeMedidas">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaModifica" ColumnName="FechaModifica" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="IDUnidadDeMedida" ColumnName="IDUnidadDeMedida" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="DBWNHMEModel.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="HostEdita" ColumnName="HostEdita" />
+          <ScalarProperty Name="IDUsuarioEdita" ColumnName="IDUsuarioEdita" />
+          <ScalarProperty Name="IDUsuarioCrea" ColumnName="IDUsuarioCrea" />
+          <ScalarProperty Name="HostCrea" ColumnName="HostCrea" />
+          <ScalarProperty Name="FechaBaja" ColumnName="FechaBaja" />
+          <ScalarProperty Name="FechaCrea" ColumnName="FechaCrea" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+          <ScalarProperty Name="Clave" ColumnName="Clave" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+          <ScalarProperty Name="IDUsuario" ColumnName="IDUsuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="RolPermisos" TypeName="DBWNHMEModel.RolPermisos" StoreEntitySet="RolPermisos">
+      <EndProperty Name="Roles">
+        <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+      </EndProperty>
+      <EndProperty Name="Permisos">
+        <ScalarProperty Name="IdPermiso" ColumnName="IdPermiso" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
